@@ -28,9 +28,9 @@ LNFLAGS = -g
 
 # default target: create all of the programs listed
 #
-OBJS = crt init iproc kernal keyboard queues startkbcrtc userAPI userProcesses
+OBJS = crt init iproc kernal keyboard queues iRTX userAPI userProcesses
 
-all: crt init iproc kernal keyboard queues startkbcrtc userAPI userProcesses clean
+all: crt init iproc kernal keyboard queues iRTX userAPI userProcesses clean
 
 #   programs
 #   these commands link the object files and libraries into executables 
@@ -60,9 +60,9 @@ queues:queues.o
 	@echo linking queues.o file
 	$(LINK) $(LNFLAGS) -o $@ queues.o -lrt
 	
-startkbcrtc:startkbcrtc.o
-	@echo linking startkbcrtc.o file
-	$(LINK) $(LNFLAGS) -o $@ startkbcrtc.o -lrt
+iRTX:iRTX.o
+	@echo linking iRTX.o file
+	$(LINK) $(LNFLAGS) -o $@ iRTX.o -lrt
 
 userAPI:userAPI.o
 	@echo linking userAPI.o file
@@ -98,9 +98,9 @@ queues.o: queues.c
 	@echo building queues.c
 	$(CC) $(CFLAGS) queues.c
 	
-startkbcrt.o: startkbcrtc.c
-	@echo building startkbcrtc.c
-	$(CC) $(CFLAGS) startkbcrtc.c
+iRTX.o: iRTX.c
+	@echo building iRTX.c
+	$(CC) $(CFLAGS) iRTX.c
 	
 userAPI.o: userAPI.c
 	@echo building userAPI.c

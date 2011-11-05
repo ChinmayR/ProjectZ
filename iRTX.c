@@ -1,5 +1,3 @@
-// kernal.c
-
 
 #include <stdlib.h>
 #include <signal.h>
