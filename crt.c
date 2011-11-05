@@ -1,18 +1,7 @@
-// keyboard.c
-//
-// Keyboard Reader - emulate a hardware interrupt
-// read the keyboard and signal the parent process when a key is received
-//
-//+++++++++++++++++++++++
-// modifed to use the POSIX-style of obtaining shared memory
-// by P. Dasiewicz, June 5, 2007
-//+++++++++++++++++++++++++
-
-
 
 #include <stdio.h>
 #include <signal.h>
-#include "kernal.h"
+#include "kbcrt.h"
 #include <fcntl.h>
 
 #include <sys/mman.h>
@@ -26,6 +15,7 @@ int buf_index;
 // Basically, we rely on the parent process to cleanup shared memory
 void in_die(int signal)
 {
+	printf("CRT exiting...\n");
 	exit(0);
 }
 

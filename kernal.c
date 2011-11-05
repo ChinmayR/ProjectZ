@@ -1,4 +1,4 @@
-// demo.c
+// kernal.c
 //
 // demo program for MTE 241
 // demonstrates	use of signals and setting up shared memory
@@ -22,7 +22,7 @@
 #include <signal.h>
 #include <unistd.h>			// getpid() definition
 
-#include "kernal.h"
+#include "rtx.h"
 #include <fcntl.h>
 
 #include <sys/mman.h>
@@ -183,7 +183,6 @@ void kbd_handler(int signum)
 		numOfTicks = hour*3600 + min*60 + sec;
 
 	    }
-
  
 	    //printf("Keyboard input was: %s\n",command.indata);
 	    in_mem_p_key->ok_flag = 0;  // tell child that the buffer has been emptied

@@ -26,30 +26,92 @@ LNFLAGS = -g
 ##  list all of the executables to be created with the makefile
 
 
-
 # default target: create all of the programs listed
 #
-all:	kernal keyboard crt
+OBJS = crt init iproc kernal keyboard queues startkbcrtc userAPI userProcesses
+
+all: crt init iproc kernal keyboard queues startkbcrtc userAPI userProcesses clean
 
 #   programs
 #   these commands link the object files and libraries into executables 
 
-kernal:kernal.o 
+crt:crt.o
+	@echo linking crt.o file
+	$(LINK) $(LNFLAGS) -o $@ crt.o -lrt
+	
+init:init.o
+	@echo linking init.o file
+	$(LINK) $(LNFLAGS) -o $@ init.o -lrt
+	
+iproc:iproc.o
+	@echo linking iproc.o file
+	$(LINK) $(LNFLAGS) -o $@ iproc.o -lrt
+	
+
+kernal:kernal.o
+	@echo linking kernal.o file
 	$(LINK) $(LNFLAGS) -o $@ kernal.o -lrt
 		
-keyboard: keyboard.o 
+keyboard: keyboard.o
+	@echo linking keyboard.o file
 	$(LINK) $(LNFLAGS) -o $@ keyboard.o -lrt
 
-crt: crt.o
-	$(LINK) $(LNFLAGS) -o $@ crt.o -lrt
+queues:queues.o
+	@echo linking queues.o file
+	$(LINK) $(LNFLAGS) -o $@ queues.o -lrt
+	
+startkbcrtc:startkbcrtc.o
+	@echo linking startkbcrtc.o file
+	$(LINK) $(LNFLAGS) -o $@ startkbcrtc.o -lrt
 
-# compile the source code into object files
+userAPI:userAPI.o
+	@echo linking userAPI.o file
+	$(LINK) $(LNFLAGS) -o $@ userAPI.o -lrt
+	
+userProcesses:userProcesses.o
+	@echo linking userProcesses.o file
+	$(LINK) $(LNFLAGS) -o $@ userProcesses.o -lrt
 
-kernal.o: kernal.c kernal.h
+#compile the source code into object files
+
+crt.o: crt.c kbcrt.h
+	@echo building crt.c
+	$(CC) $(CFLAGS) crt.c
+
+init.o: init.c
+	@echo building init.c
+	$(CC) $(CFLAGS) init.c
+	
+iproc.o: iproc.c
+	@echo building iproc.c
+	$(CC) $(CFLAGS) iproc.c
+
+kernal.o: kernal.c rtx.h
+	@echo building kernal.c
 	$(CC) $(CFLAGS) kernal.c
 
-keyboard.o: keyboard.c kernal.h
+keyboard.o: keyboard.c kbcrt.h
+	@echo building keyboard.c
 	$(CC) $(CFLAGS) keyboard.c 
 
-crt.o: crt.c kernal.h
-	$(CC) $(CFLAGS) crt.c
+queues.o: queues.c
+	@echo building queues.c
+	$(CC) $(CFLAGS) queues.c
+	
+startkbcrt.o: startkbcrtc.c
+	@echo building startkbcrtc.c
+	$(CC) $(CFLAGS) startkbcrtc.c
+	
+userAPI.o: userAPI.c
+	@echo building userAPI.c
+	$(CC) $(CFLAGS) userAPI.c
+	
+userProcesses.o: userProcesses.c
+	@echo building userProcesses.c
+	$(CC) $(CFLAGS) userProcesses.c
+	
+clean:
+	@echo Cleaning object files
+	rm *.o
+	#rm ${OBJS}
+
